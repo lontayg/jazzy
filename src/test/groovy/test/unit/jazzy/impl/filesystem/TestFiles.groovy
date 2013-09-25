@@ -23,11 +23,11 @@ class TestFiles {
     }
 
     static String getV1TestScriptDirectoryPath() {
-        getClass().getResource('/test/unit').path
+        getClass().getResource('/test-scripts/unit').path
     }
 
     static String getV1TestScriptPath() {
-        getClass().getResource('/test/unit/v1-testscript.jazzy').file
+        getClass().getResource('/test-scripts/unit/v1-testscript.jazzy').file
     }
 
     static File getV1TestScript() {
@@ -39,11 +39,11 @@ class TestFiles {
     }
 
     static String getEndToEndStartScriptPath() {
-        getClass().getResource('/test/endtoend/start.json').file
+        getClass().getResource('/test-scripts/endtoend/start.json').file
     }
 
     static String getEndToEndResultContent() {
-        new File(getClass().getResource('/test/endtoend/result.json').path).text
+        new File(getClass().getResource('/test-scripts/endtoend/result.json').path).text
     }
 
 
