@@ -1,12 +1,14 @@
-apply plugin: 'groovy'
+subprojects {
+    apply plugin: 'groovy'
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        mavenCentral()
+    }
 
-dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.1.3'
-    compile 'org.slf4j:slf4j-api:1.7.5'
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.slf4j:slf4j-simple:1.7.5'
+    dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.1.3'
+        compile 'org.slf4j:slf4j-api:1.7.5'
+        testCompile 'junit:junit:4.11'
+        testCompile 'org.slf4j:slf4j-simple:1.7.5'
+    }
 }
