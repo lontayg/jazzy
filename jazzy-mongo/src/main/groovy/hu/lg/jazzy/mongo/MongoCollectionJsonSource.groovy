@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package test.common
+package hu.lg.jazzy.mongo
 
-import groovy.json.JsonException
-import groovy.json.JsonSlurper
+import hu.lg.jazzy.core.JsonDocument
+import hu.lg.jazzy.core.JsonSource
 
-class JsonAssert {
-    static def slurper = new JsonSlurper()
+class MongoCollectionJsonSource implements JsonSource {
 
 
-    static void assertJsonStringsEqual(String a, String b) {
-        assert parse(a) == parse(b)
-    }
-
-    private static Object parse(String a) {
-        try {
-            slurper.parseText(a)
-        } catch (JsonException e) {
-            throw new RuntimeException("Invalid json string [$a] " , e)
-        }
+    @Override
+    List<JsonDocument> getJsonDocuments() {
+        return null
     }
 }

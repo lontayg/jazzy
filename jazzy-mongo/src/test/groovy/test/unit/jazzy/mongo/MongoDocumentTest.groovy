@@ -14,33 +14,35 @@
  * limitations under the License.
  */
 
-package test.integration.jazzy
+package test.unit.jazzy.mongo
 import com.mongodb.BasicDBObject
-import com.mongodb.DB
 import com.mongodb.DBCollection
-import com.mongodb.DBObject
-import com.mongodb.util.JSON
+import hu.lg.jazzy.mongo.MongoDocument
+import org.junit.Ignore
 import org.junit.Test
-import test.common.AbstractMongoTest
 
-class MongoSetupTest extends AbstractMongoTest {
+import static test.common.JsonAssert.assertJsonStringsEqual
+
+class MongoDocumentTest {
+    static final DBCollection DUMMY_COLLECTION = null
+
 
 
     @Test
-    void mongoIsWorking() {
+    void contentIsJsonString() {
+        def document = new BasicDBObject()
 
-        DB testDb = mongoClient.getDB "test"
+        document.with {
+            append "name", "Gabor"
+            append "age", 30
+        }
 
-        DBCollection col = testDb.createCollection "testCollection", new BasicDBObject()
-        col.save JSON.parse("{'name':'Gabor', 'age':30}") as DBObject
+        assertJsonStringsEqual new MongoDocument(document, DUMMY_COLLECTION).content, '{ "name":"Gabor", "age":30 }'
+    }
 
-
-        testDb = mongoClient.getDB "test"
-        col = testDb.getCollection "testCollection"
-        assert col.count() == 1L
-
-        def document = col.findOne()
-        assert document.name == 'Gabor'
-        assert document.age == 30
+    @Ignore("in development")
+    @Test
+    void updatesContent() {
+        
     }
 }

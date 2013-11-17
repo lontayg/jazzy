@@ -1,3 +1,2 @@
-package migration
 
 json.person.age += 2
