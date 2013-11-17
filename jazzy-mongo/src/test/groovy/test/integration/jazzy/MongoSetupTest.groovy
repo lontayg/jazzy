@@ -40,8 +40,7 @@ class MongoSetupTest extends AbstractMongoTest {
         assert col.count() == 1L
 
         def document = col.findOne()
-
-        //TODO: assert in jsonformat
-
+        assert document.name == 'Gabor'
+        assert document.age == 30
     }
 }
