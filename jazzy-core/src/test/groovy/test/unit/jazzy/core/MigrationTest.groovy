@@ -144,9 +144,11 @@ class MigrationTest {
     @Test
     void logsScriptFailure() {
         setupMocksForError()
-        loggerMockContext.demand.info(4, infoLogClosure)
-        loggerMockContext.demand.warn { aClass, msg, e -> assert aClass == Migration }
-        loggerMockContext.demand.info(1, infoLogClosure)
+        loggerMockContext.demand.with {
+            info(4, infoLogClosure)
+            warn { aClass, msg, e -> assert aClass == Migration }
+            info(1, infoLogClosure)
+        }
 
         def configuration = configurationWithMocks()
         //noinspection GroovyAssignabilityCheck

@@ -15,18 +15,17 @@
  */
 
 package test.unit.jazzy.mongo
-import com.mongodb.BasicDBObject
-import com.mongodb.DBCollection
+import com.mongodb.*
+import com.mongodb.util.JSON
 import hu.lg.jazzy.mongo.MongoDocument
-import org.junit.Ignore
 import org.junit.Test
 
 import static test.common.JsonAssert.assertJsonStringsEqual
 
 class MongoDocumentTest {
     static final DBCollection DUMMY_COLLECTION = null
-
-
+    def aCollection = new FakeDBCollection()
+    def aDbObject = new BasicDBObject()
 
     @Test
     void contentIsJsonString() {
@@ -41,9 +40,14 @@ class MongoDocumentTest {
                 '{ "name":"Gabor", "age":30 }'
     }
 
-    @Ignore("in development")
     @Test
     void updatesContent() {
-        
+        def migratedContent = '{ "name":"Gabor", "age":30 }'
+
+        new MongoDocument(aDbObject, aCollection).update(migratedContent)
+
+        assert aDbObject == aCollection.oldObject
+        assert JSON.parse(migratedContent) == aCollection.newObject
+
     }
 }

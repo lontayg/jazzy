@@ -16,14 +16,31 @@
 
 package hu.lg.jazzy.mongo
 
+import com.mongodb.DBCollection
+import com.mongodb.DBCursor
 import hu.lg.jazzy.core.JsonDocument
 import hu.lg.jazzy.core.JsonSource
 
 class MongoCollectionJsonSource implements JsonSource {
 
+    private DBCollection collection
+
+    MongoCollectionJsonSource(DBCollection collection) {
+        this.collection = collection
+    }
 
     @Override
     List<JsonDocument> getJsonDocuments() {
-        return null
+        def list = []
+        DBCursor cursor = collection.find()
+        try {
+            while(cursor.hasNext()) {
+                list << new MongoDocument(cursor.next(), collection)
+            }
+        } finally {
+            cursor.close()
+        }
+
+        return list
     }
 }

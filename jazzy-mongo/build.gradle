@@ -2,5 +2,6 @@
 dependencies {
     compile project(':jazzy-core')
     compile 'org.mongodb:mongo-java-driver:2.11.3'
+    testCompile project(':jazzy-core').sourceSets.test.output
     testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:1.40'
 }

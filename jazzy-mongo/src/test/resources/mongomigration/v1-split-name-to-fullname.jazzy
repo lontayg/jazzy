@@ -1,8 +1,9 @@
 
 def names = json.name.split(' ')
 
+json.fullName = [:]
 json.fullName.firstName = names[0]
 json.fullName.lastName = names[1]
-json.name = null
+json.remove 'name'
 
 

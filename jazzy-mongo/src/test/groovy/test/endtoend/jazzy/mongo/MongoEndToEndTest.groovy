@@ -23,7 +23,6 @@ import com.mongodb.util.JSON
 import hu.lg.jazzy.Jazzy
 import hu.lg.jazzy.impl.filesystem.DirectoryScriptSource
 import hu.lg.jazzy.mongo.MongoCollectionJsonSource
-import org.junit.Ignore
 import org.junit.Test
 import test.common.AbstractMongoTest
 
@@ -34,24 +33,23 @@ class MongoEndToEndTest extends AbstractMongoTest {
 
 
     @Test
-    @Ignore("in development")
     void runsMigrationOnMongoDb() {
 
         saveToContacts "{'name':'Gabor Lontay', 'age':30, 'phone':'+3620-555-879-45'}"
 
 
         jazzy.config.with {
-            jsonSource = new MongoCollectionJsonSource()
+            jsonSource = new MongoCollectionJsonSource(contactsCollection)
             scriptSource = new DirectoryScriptSource(path: getClass().getResource('/mongomigration').path)
         }
 
-        //migration changes name to Full Name object with first and last name
+        //migration script v1 changes name to Full Name object with first and last name
         jazzy.migrate()
 
 
         DBObject contact = contactFromMongo
 
-        assert contact.name == null
+        assert !contact.containsField("name")
         assert contact.fullName.firstName == "Gabor"
         assert contact.fullName.lastName == "Lontay"
 
@@ -66,9 +64,13 @@ class MongoEndToEndTest extends AbstractMongoTest {
     }
 
     DBObject getContactFromMongo() {
+        DBCollection collection = contactsCollection
+        return collection.findOne()
+    }
+
+    private DBCollection getContactsCollection() {
         DB testDb = mongoClient.getDB DB_NAME
         DBCollection collection = testDb.getCollection COLLECTION_NAME
-        DBObject contact = collection.findOne()
-        contact
+        collection
     }
 }
