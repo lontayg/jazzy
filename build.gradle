@@ -1,3 +1,6 @@
+group = 'hu.lg.jazzy'
+version = '1.0-SNAPSHOT'
+
 subprojects {
     apply plugin: 'groovy'
 
