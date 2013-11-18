@@ -37,7 +37,8 @@ class MongoDocumentTest {
             append "age", 30
         }
 
-        assertJsonStringsEqual new MongoDocument(document, DUMMY_COLLECTION).content, '{ "name":"Gabor", "age":30 }'
+        assertJsonStringsEqual new MongoDocument(document, DUMMY_COLLECTION).content,
+                '{ "name":"Gabor", "age":30 }'
     }
 
     @Ignore("in development")

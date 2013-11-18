@@ -100,13 +100,13 @@ class MigrationTest {
         versionStoreMockContext.demand.getVersionFor { Version.of("1") }
         versionStoreMockContext.demand.storeNewVersionOf { a, b -> }
 
-        eventListenerMockContext.with {
-            demand.migrationStartedOn { json -> assert json == this.json }
-            demand.jsonDocumentParsed(parsedJsonClosure)
-            demand.shellCreatedFor(parsedJsonClosure)
-            demand.runningScriptOn(jsonWithVersionClosure)
-            demand.scriptFinishedOn(jsonWithVersionClosure)
-            demand.migrationFinishedOn(parsedJsonClosure)
+        eventListenerMockContext.demand.with {
+            migrationStartedOn { json -> assert json == this.json }
+            jsonDocumentParsed(parsedJsonClosure)
+            shellCreatedFor(parsedJsonClosure)
+            runningScriptOn(jsonWithVersionClosure)
+            scriptFinishedOn(jsonWithVersionClosure)
+            migrationFinishedOn(parsedJsonClosure)
         }
 
 
