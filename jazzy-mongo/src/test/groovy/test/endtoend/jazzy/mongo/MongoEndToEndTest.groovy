@@ -22,6 +22,7 @@ import com.mongodb.DBObject
 import com.mongodb.util.JSON
 import hu.lg.jazzy.Jazzy
 import hu.lg.jazzy.impl.filesystem.DirectoryScriptSource
+import hu.lg.jazzy.mongo.JazzyWithMongo
 import hu.lg.jazzy.mongo.MongoCollectionJsonSource
 import org.junit.Test
 import test.common.AbstractMongoTest
@@ -56,6 +57,20 @@ class MongoEndToEndTest extends AbstractMongoTest {
         assert contact.age == 30 //untouched
     }
 
+    @Test
+    void runsMigrationWithJazzyWithMongo() {
+        saveToContacts "{'name':'Gabor Lontay', 'age':30, 'phone':'+3620-555-879-45'}"
+
+        def mongoMigration = new JazzyWithMongo(mongoDB, getClass().getResource('/contacts').path[0..-9])
+        mongoMigration.addCollection COLLECTION_NAME
+
+        mongoMigration.migrate()
+
+        DBObject contact = contactFromMongo
+
+        assert contact.name == "Anna"
+    }
+
     void saveToContacts(String data) {
         DB testDb = mongoClient.getDB DB_NAME
 
@@ -69,8 +84,12 @@ class MongoEndToEndTest extends AbstractMongoTest {
     }
 
     private DBCollection getContactsCollection() {
-        DB testDb = mongoClient.getDB DB_NAME
+        DB testDb = mongoDB
         DBCollection collection = testDb.getCollection COLLECTION_NAME
         collection
+    }
+
+    private DB getMongoDB() {
+        mongoClient.getDB DB_NAME
     }
 }

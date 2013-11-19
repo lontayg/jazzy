@@ -15,13 +15,12 @@
  */
 
 package hu.lg.jazzy
-
 import hu.lg.jazzy.core.Configuration
 import hu.lg.jazzy.core.Migration
 
 class Jazzy {
 
-    Configuration config = new Configuration();
+    Configuration config = new Configuration()
 
 
     void migrate() {

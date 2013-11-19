@@ -39,11 +39,11 @@ class MongoSetupTest extends AbstractMongoTest {
         assert document.age == 30
 
 
-        updateDocument document, "{'name':'Joska'}"
+        updateDocument document, "{'name':'Anna'}"
 
 
         document = retrieveSingleDocument()
-        assert document.name == 'Joska'
+        assert document.name == 'Anna'
         assert document.age == null
 
 
